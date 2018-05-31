@@ -133,6 +133,12 @@ def dump_res_to_folder(inputpath, outputfolder):
     print("Dumped all remaining textures")
 
     print("Done!")
+
+def choose_open_func(path):
+    if path.endswith(".gz"):
+        return gzip.open 
+    else:
+        return open 
     
 if __name__ == "__main__":
     import argparse
@@ -149,17 +155,35 @@ if __name__ == "__main__":
                         ))
 
     args = parser.parse_args()
+    
+    input_path = args.input
+    output = args.output
+    
+    if os.path.isfile(input_path):
+        # extract res file to folder 
+        if output is None:
+            output = input_path + "_Folder"
+        
+        dump_res_to_folder(input_path, output)
+    
+    else:
+        # pack folder into res file 
+        
+        textures = []
+        models = []
+        sounds = []
+        animations = []
+        effects = []
+        scripts = []
+        
+        #for         
+                
+        
+        #input_res = "SP_5.4_Level.res.gz"
+        #folder_out = input_res+"_Folder"
+        
+        
+        
 
-    #input_res = "SP_5.4_Level.res.gz"
-    #folder_out = input_res+"_Folder"
     
     
-    
-    textures = []
-    models = []
-    sounds = []
-    animations = []
-    effects = []
-    scripts = []
-    
-    dump_res_to_folder(input_res, folder_out)
