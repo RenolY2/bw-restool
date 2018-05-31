@@ -2,7 +2,7 @@ import io
 import struct
 from array import array
 
-from .helper import read_uint32
+from .helper import read_uint32, write_uint32
 
 
 class BWResource(object):
@@ -20,7 +20,8 @@ class BWResource(object):
     # one of them is changed.
     @fileobj.setter
     def fileobj(self, fobj):
-        self._fileobj.close()
+        if self._fileobj is not None:
+            self._fileobj.close()
 
         self._fileobj = fobj
         self._data = fobj.getbuffer()
@@ -35,7 +36,14 @@ class BWResource(object):
 
         self._data = data
         self._fileobj = io.BytesIO(self._data)
-
+    
+    def write(self, file):
+        name, length, data = self.pack()
+        
+        file.write(name)
+        write_uint32(file, length)
+        file.write(data)
+    
     def pack(self):
         #data = self.fileobj.read()
         data = self._data#self.fileobj.getbuffer()
@@ -49,7 +57,12 @@ class BWResource(object):
             return BWSection(self.name, self._size, self._data, section_offset=offset)
         else:
             return cls(self.name, self._size, self._data)
-
+            
+class BWResourceFromData(BWResource):
+    def __init__(self, name, data):
+        self.name = name 
+        self._fileobj = None
+        self.fileobj = data # data should be BytesIO
 
 class BWSection(BWResource):
     def __init__(self, name, size, memview, section_offset=0):
@@ -107,6 +120,7 @@ class BWArchiveBase(BWSection):
     def write(self, f):
         unused, size, data = self.pack()
         f.write(data)
+
 
 
 def read_section(f, memview):
