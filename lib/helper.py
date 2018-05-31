@@ -1,4 +1,4 @@
-from struct import unpack
+from struct import unpack, pack
 
 
 def read_uint32(fileobj):
@@ -10,3 +10,6 @@ def read_uint32_BE(fileobj):
 
 def unpack_uint32(data, offset):
     return unpack("I", data[offset:offset+4])[0]
+
+def write_uint32(fileobj, val):
+    fileobj.write(pack("I", val))
