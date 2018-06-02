@@ -249,8 +249,6 @@ if __name__ == "__main__":
                 elif filename.endswith(".adp"):
                     # Write sound data 
                     data = BytesIO()
-                    write_uint32(data, len(filename_noextension))
-                    data.write(bytes(filename_noextension, encoding="ascii"))
                     
                     with open(fullpath, "rb") as f:
                         data.write(f.read())
