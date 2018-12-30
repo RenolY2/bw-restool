@@ -8,7 +8,8 @@ Drag & drop an extracted folder onto the bat to pack it into a .res or .res.gz f
 packed into .res, folders extracted from BW2 will be packed and compressed into .res.gz.
 
 If you want to write your own command line scripts, the following describes the command line usage:
-```python restool.py [-h] input [output]
+```
+python restool.py [-h] input [output]
 
 positional arguments:
   input       Path to folder, .res or .res.gz file.
@@ -18,7 +19,8 @@ positional arguments:
               into output folder.
 
 optional arguments:
-  -h, --help  show this help message and exit```
+  -h, --help  show this help message and exit
+```
 
 if output ends with .gz, the output file will be gzip compressed. Otherwise, compression is not used. Putting .gz at the end is 
 recommended for Battalion Wars 2.
