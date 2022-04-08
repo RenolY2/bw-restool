@@ -58,11 +58,13 @@ class BWResource(object):
         else:
             return cls(self.name, self._size, self._data)
             
+            
 class BWResourceFromData(BWResource):
     def __init__(self, name, data):
         self.name = name 
         self._fileobj = None
         self.fileobj = data # data should be BytesIO
+
 
 class BWSection(BWResource):
     def __init__(self, name, size, memview, section_offset=0):
