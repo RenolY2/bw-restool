@@ -299,7 +299,7 @@ class BWArchive(BWArchiveBase):
 
         assert self.dnos.entries[0].name == b"HFSB"
         self.dnos.entries[0] = self.hfsb = self.dnos.entries[0].as_section(cls=SoundCount)
-
+        print(self.hfsb.count, len(self.dnos.entries))
         for i in range(1, len(self.dnos.entries)):
             assert self.dnos.entries[i].name in (b"HPSD", b"DPSD")
 
@@ -310,12 +310,16 @@ class BWArchive(BWArchiveBase):
         for i, entry in enumerate(self.entries):
             if entry.name == b"FEQT":
                 self.entries[i] = self.entries[i].as_section(cls=ParticleEntry)
+                print(entry.name, bytes(self.entries[i].res_name))
             elif entry.name == b"MINA":
                 self.entries[i] = self.entries[i].as_section(cls=AnimationEntry)
+                print(entry.name, bytes(self.entries[i].res_name))
             elif entry.name == b"LDOM":
                 self.entries[i] = self.entries[i].as_section(cls=ModelSection)
+                print(entry.name, bytes(self.entries[i].res_name))
             elif entry.name == b"PRCS":
                 self.entries[i] = self.entries[i].as_section(cls=ScriptEntry)
+                print(entry.name, bytes(self.entries[i].res_name))
 
         self.sounds = [(self.dnos.entries[i], self.dnos.entries[i+1]) for i in range(1, len(self.dnos.entries), 2)]
         self.models = [x for x in filter(lambda k: k.name == b"LDOM", self.entries)]
